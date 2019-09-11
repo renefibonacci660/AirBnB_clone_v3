@@ -7,7 +7,8 @@ from models.amenity import Amenity
 
 
 @app_views.route('/amenities', methods=["GET"], strict_slashes=False)
-@app_views.route('/amenities/<amenity_id>', methods=["GET"], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>',
+                 methods=["GET"], strict_slashes=False)
 def amenity(amenity_id=None):
     """ Retrieves amenity obj """
     if amenity_id is None:
@@ -49,7 +50,8 @@ def post_amenities():
     return (jsonify(new_amenity.to_dict()), 201)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=["PUT"], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=["PUT"],
+                 strict_slashes=False)
 def update_amenities(amenity_id):
     """ Updates a amenity obj & id """
     content = request.get_json()
