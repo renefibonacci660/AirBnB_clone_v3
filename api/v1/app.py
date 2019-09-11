@@ -10,18 +10,14 @@ app.register_blueprint(app_views)
 
 
 @app.teardown_appcontext
-""" handles closing of app once connection is established """
-
-
 def app_close(var=None):
+    """ handles closing of app once connection is established """
     storage.close()
 
 
 @app.errorhandler(404)
-""" Handles error message types when connection not completed """
-
-
 def not_found(var):
+    """ Handles error message types when connection not completed """
     return jsonify({"error": "Not found"}), 404
 
 if __name__ == "__main__":
