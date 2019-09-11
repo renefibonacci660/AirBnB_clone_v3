@@ -72,7 +72,7 @@ class FileStorage:
     def get(self, cls, id):
         """returns the object based on the class name and id"""
         all_obj = self.all()
-        search = "{}.{}".format(cls, id) 
+        search = "{}.{}".format(cls, id)
         results = all_obj.get(search)
         return results
 
@@ -84,4 +84,3 @@ class FileStorage:
             parmameter = str(cls)
         all_objs = self.all(parmameter)
         return (len(all_objs))
-        

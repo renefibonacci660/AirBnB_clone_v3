@@ -78,7 +78,7 @@ class DBStorage:
     def get(self, cls, id):
         """returns the object based on the class name and id"""
         all_obj = self.all()
-        search = "{}.{}".format(cls, id) 
+        search = "{}.{}".format(cls, id)
         results = all_obj.get(search)
         return results
 
