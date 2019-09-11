@@ -4,12 +4,12 @@ from models import storage
 from flask import jsonify
 
 
-@app_views.route("/status", methods=[GET])
+@app_views.route("/status")
 def app_status():
     return jsonify({"status": "OK"})
 
 
-@app_views.route("/stats", methods=[GET])
+@app_views.route("/stats")
 def cool_stats():
     return jsonify({
         "amenities": storage.count("Amenity"),
