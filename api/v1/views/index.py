@@ -10,10 +10,10 @@ def app_status():
 @app_views.route("/stats")
 def cool_stats():
     return jsonify({
-        "amenities": storage.count("amenities"),
-        "cities": storage.count("cities"),
-        "places": storage.count("places"),
-        "reviews": storage.count("reviews"),
-        "states": storage.count("states"),
-        "users": storage.count("users")
+        "amenities": storage.count("Amenity"),
+        "cities": storage.count("City"),
+        "places": storage.count("Place"),
+        "reviews": storage.count("Review"),
+        "states": storage.count("State"),
+        "users": storage.count("User")
     })
