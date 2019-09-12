@@ -17,9 +17,10 @@ def amenity(amenity_id=None):
         return jsonify(my_amenities)
 
     my_amenities = storage.get("Amenity", amenity_id)
-    if my_amenities is not None:
+    if my_amenities is None:
+        abort(404)
+    else:
         return jsonify(my_amenities.to_dict())
-    abort(404)
 
 
 @app_views.route('/amenities/<amenity_id>',
@@ -39,11 +40,11 @@ def delete_amenities(amenity_id):
 def post_amenities():
     """ Creates a Amenity """
     content = request.get_json()
+    if content is None:
+        return (jsonify({"error": "Not a JSON"}), 400)
     name = content.get("name")
     if name is None:
         return (jsonify({"error": "Missing name"}), 400)
-    if content is None:
-        return (jsonify({"error": "Not a JSON"}), 400)
 
     new_amenity = Amenity(**content)
     new_amenity.save()
