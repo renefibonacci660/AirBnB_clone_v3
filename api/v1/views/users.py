@@ -12,11 +12,11 @@ from models.user import User
 def user(user_id=None):
     """ Retrieves user obj """
     if user_id is None:
-        users = storage.all("user")
+        users = storage.all("User")
         my_users = [value.to_dict() for key, value in users.items()]
         return jsonify(my_users)
 
-    my_users = storage.get("user", user_id)
+    my_users = storage.get("User", user_id)
     if my_users is None:
         abort(404)
     else:
@@ -28,7 +28,7 @@ def user(user_id=None):
 def delete_users(user_id):
     """ Deletes a user obj based on its' id """
 
-    my_user = storage.get("user", user_id)
+    my_user = storage.get("User", user_id)
     if my_user is None:
         abort(404)
     storage.delete(my_user)
@@ -63,7 +63,7 @@ def update_users(user_id):
     if content is None:
         return (jsonify({"error": "Not a JSON"}), 400)
 
-    my_user = storage.get("user", user_id)
+    my_user = storage.get("User", user_id)
     if my_user is None:
         abort(404)
 
