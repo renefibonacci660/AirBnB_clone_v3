@@ -45,7 +45,6 @@ def post_amenities():
     if content is None:
         return (jsonify({"error": "Not a JSON"}), 400)
 
-
     new_amenity = Amenity(**content)
     new_amenity.save()
 
