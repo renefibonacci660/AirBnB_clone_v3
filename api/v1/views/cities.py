@@ -12,14 +12,16 @@ from models.state import State
 @app_views.route('/cities/<city_id>', methods=["GET"], strict_slashes=False)
 def city(city_id=None, state_id=None):
     """ Retrieves City obj """
+    states_ids = storage.all("State", id)
     state_objects = storage.get("State", state_id)
-    if city_id is None and state_objects is not None:
+    if city_id is None and state_id in states_ids:
         if state_id is None:
             abort(404)
         cities = storage.all("City")
         my_cities = [value.to_dict() for key, value in cities.items()]
         return (jsonify(my_cities), 200)
-
+    elif state_id not in states_ids:
+        abort(404)
     my_cities = storage.get("City", city_id)
     if my_cities is None:
         abort(404)
