@@ -88,14 +88,14 @@ def update_cities(city_id):
     if content is None:
         return (jsonify({"error": "Not a JSON"}), 400)
 
-    my_city = storage.get("State", state_id)
+    my_city = storage.get("City", city_id)
     if my_city is None:
         abort(404)
 
     not_allowed = ["id", "created_at", "updated_at"]
     for key, value in content.items():
         if key not in not_allowed:
-            setattr(my_state, key, value)
+            setattr(my_city, key, value)
 
     my_city.save()
     return jsonify(my_city.to_dict())
