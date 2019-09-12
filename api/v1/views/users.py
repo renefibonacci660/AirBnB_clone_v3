@@ -67,7 +67,7 @@ def update_users(user_id):
     if my_user is None:
         abort(404)
 
-    not_allowed = ["id", "created_at", "updated_at"]
+    not_allowed = ["id", "email", "created_at", "updated_at"]
     for key, value in content.items():
         if key not in not_allowed:
             setattr(my_user, key, value)
