@@ -13,12 +13,10 @@ from models.state import State
 def city(city_id=None, state_id=None):
     """ Retrieves City obj """
     state_objects = storage.get("State", state_id)
-    if state_objects:
-        new_state = State(**state_objects)
-        if city_id is None and new_state.state_id == state_id:
-            cities = storage.all("City")
-            my_cities = [value.to_dict() for key, value in cities.items()]
-            return (jsonify(my_cities), 200)
+    if city_id is None and state_objects is not None:
+        cities = storage.all("City")
+        my_cities = [value.to_dict() for key, value in cities.items()]
+        return (jsonify(my_cities), 200)
 
     my_cities = storage.get("City", city_id)
     if my_cities is not None:
