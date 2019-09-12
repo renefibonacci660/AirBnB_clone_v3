@@ -14,11 +14,11 @@ def amenity(amenity_id=None):
     if amenity_id is None:
         amenities = storage.all("Amenity")
         my_amenities = [value.to_dict() for key, value in amenities.items()]
-        return (jsonify(my_amenities), 200)
+        return jsonify(my_amenities)
 
     my_amenities = storage.get("Amenity", amenity_id)
     if my_amenities is not None:
-        return (jsonify(my_amenities.to_dict()), 200)
+        return jsonify(my_amenities.to_dict())
     abort(404)
 
 
@@ -44,6 +44,8 @@ def post_amenities():
         return (jsonify({"error": "Missing name"}), 400)
     if content is None:
         return (jsonify({"error": "Not a JSON"}), 400)
+
+
     new_amenity = Amenity(**content)
     new_amenity.save()
 
@@ -68,4 +70,4 @@ def update_amenities(amenity_id):
             setattr(my_amenity, key, value)
 
     my_amenity.save()
-    return jsonify(my_amenity.to_dict(), 200)
+    return (jsonify(my_amenity.to_dict()), 200)
