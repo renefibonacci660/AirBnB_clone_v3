@@ -7,53 +7,51 @@ from models.amenity import Amenity
 
 
 @app_views.route('/amenities', methods=["GET"], strict_slashes=False)
-@app_views.route('/amenities/<amenity_id>',
-                 methods=["GET"], strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=["GET"], strict_slashes=False)
 def amenity(amenity_id=None):
-    """ Retrieves amenity obj """
+    """ Retrieves Amenity obj """
     if amenity_id is None:
-        amenities = storage.all("amenity")
+        amenities = storage.all("Amenity")
         my_amenities = [value.to_dict() for key, value in amenities.items()]
         return jsonify(my_amenities)
 
-    my_amenities = storage.get("amenity", amenity_id)
+    my_amenities = storage.get("Amenity", amenity_id)
     if my_amenities is not None:
         return jsonify(my_amenities.to_dict())
     abort(404)
 
 
-@app_views.route('/amenities/<s_id>', methods=["DELETE"], strict_slashes=False)
-def delete_amenities(s_id):
+@app_views.route('/amenities/<amenity_id>', methods=["DELETE"], strict_slashes=False)
+def delete_amenities(amenity_id):
     """ Deletes a Amenity obj based on its' id """
 
-    my_amenity = storage.get("amenity", s_id)
+    my_amenity = storage.get("Amenity", amenity_id)
     if my_amenity is None:
         abort(404)
     storage.delete(my_amenity)
     storage.save()
-    return (jsonify({}), 200)
+    return (jsonify({}))
 
 
 @app_views.route('/amenities', methods=["POST"], strict_slashes=False)
 def post_amenities():
-    """ Creates an Amenity """
+    """ Creates a Amenity """
     content = request.get_json()
-    name = content.get("name")
     if name is None:
         return (jsonify({"error": "Missing name"}), 400)
     if content is None:
         return (jsonify({"error": "Not a JSON"}), 400)
 
+    name = content.get("name")
     new_amenity = Amenity(**content)
     new_amenity.save()
 
     return (jsonify(new_amenity.to_dict()), 201)
 
 
-@app_views.route('/amenities/<amenity_id>', methods=["PUT"],
-                 strict_slashes=False)
+@app_views.route('/amenities/<amenity_id>', methods=["PUT"], strict_slashes=False)
 def update_amenities(amenity_id):
-    """ Updates a amenity obj & id """
+    """ Updates a Amenity obj & id """
     content = request.get_json()
     if content is None:
         return (jsonify({"error": "Not a JSON"}), 400)
@@ -68,4 +66,4 @@ def update_amenities(amenity_id):
             setattr(my_amenity, key, value)
 
     my_amenity.save()
-    return jsonify(my_amenity.to_dict(), 200)
+    return jsonify(my_amenity.to_dict())
