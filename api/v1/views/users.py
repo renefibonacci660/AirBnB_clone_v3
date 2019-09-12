@@ -10,7 +10,7 @@ from models.user import User
 @app_views.route('/users/<user_id>',
                  methods=["GET"], strict_slashes=False)
 def user(user_id=None):
-    """ Retrieves user obj """
+    """ Retrieves User obj """
     if user_id is None:
         users = storage.all("User")
         my_users = [value.to_dict() for key, value in users.items()]
@@ -26,7 +26,7 @@ def user(user_id=None):
 @app_views.route('/users/<user_id>',
                  methods=["DELETE"], strict_slashes=False)
 def delete_users(user_id):
-    """ Deletes a user obj based on its' id """
+    """ Deletes a User obj based on its' id """
 
     my_user = storage.get("User", user_id)
     if my_user is None:
@@ -38,7 +38,7 @@ def delete_users(user_id):
 
 @app_views.route('/users', methods=["POST"], strict_slashes=False)
 def post_users():
-    """ Creates a user """
+    """ Creates a User """
     content = request.get_json()
     if content is None:
         return (jsonify({"error": "Not a JSON"}), 400)
@@ -49,7 +49,7 @@ def post_users():
     if password is None:
         return (jsonify({"error": "Missing password"}), 400)
 
-    new_user = user(**content)
+    new_user = User(**content)
     new_user.save()
 
     return (jsonify(new_user.to_dict()), 201)
@@ -58,7 +58,7 @@ def post_users():
 @app_views.route('/users/<user_id>',
                  methods=["PUT"], strict_slashes=False)
 def update_users(user_id):
-    """ Updates a user obj & id """
+    """ Updates a User obj & id """
     content = request.get_json()
     if content is None:
         return (jsonify({"error": "Not a JSON"}), 400)
@@ -67,7 +67,7 @@ def update_users(user_id):
     if my_user is None:
         abort(404)
 
-    not_allowed = ["id", "created_at", "updated_at", "email"]
+    not_allowed = ["id", "created_at", "updated_at"]
     for key, value in content.items():
         if key not in not_allowed:
             setattr(my_user, key, value)
