@@ -42,9 +42,12 @@ def post_users():
     content = request.get_json()
     if content is None:
         return (jsonify({"error": "Not a JSON"}), 400)
-    name = content.get("name")
-    if name is None:
-        return (jsonify({"error": "Missing name"}), 400)
+    email = content.get("email")
+    if email is None:
+        return (jsonify({"error": "Missing email"}), 400)
+    password = content.get("password")
+    if password is None:
+        return (jsonify({"error": "Missing password"}), 400)
 
     new_user = user(**content)
     new_user.save()
@@ -64,7 +67,7 @@ def update_users(user_id):
     if my_user is None:
         abort(404)
 
-    not_allowed = ["id", "created_at", "updated_at"]
+    not_allowed = ["id", "created_at", "updated_at", "email"]
     for key, value in content.items():
         if key not in not_allowed:
             setattr(my_user, key, value)
