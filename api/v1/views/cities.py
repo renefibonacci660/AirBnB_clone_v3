@@ -20,7 +20,7 @@ def city(city_id=None, state_id=None):
 
     my_cities = storage.get("City", city_id)
     if my_cities is not None:
-        return jsonify(my_cities.to_dict(), 200)
+        return (jsonify(my_cities.to_dict()), 200)
     abort(404)
 
 
