@@ -14,11 +14,11 @@ def amenity(amenity_id=None):
     if amenity_id is None:
         amenities = storage.all("Amenity")
         my_amenities = [value.to_dict() for key, value in amenities.items()]
-        return jsonify(my_amenities)
+        return (jsonify(my_amenities), 200)
 
     my_amenities = storage.get("Amenity", amenity_id)
     if my_amenities is not None:
-        return jsonify(my_amenities.to_dict())
+        return (jsonify(my_amenities.to_dict()), 200)
     abort(404)
 
 
@@ -32,7 +32,7 @@ def delete_amenities(amenity_id):
         abort(404)
     storage.delete(my_amenity)
     storage.save()
-    return (jsonify({}))
+    return (jsonify({}), 200)
 
 
 @app_views.route('/amenities', methods=["POST"], strict_slashes=False)
@@ -68,4 +68,4 @@ def update_amenities(amenity_id):
             setattr(my_amenity, key, value)
 
     my_amenity.save()
-    return jsonify(my_amenity.to_dict())
+    return jsonify(my_amenity.to_dict(), 200)
