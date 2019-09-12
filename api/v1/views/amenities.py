@@ -38,12 +38,12 @@ def delete_amenities(s_id):
 def post_amenities():
     """ Creates an Amenity """
     content = request.get_json()
+    name = content.get("name")
     if name is None:
         return (jsonify({"error": "Missing name"}), 400)
     if content is None:
         return (jsonify({"error": "Not a JSON"}), 400)
 
-    name = content.get("name")
     new_amenity = Amenity(**content)
     new_amenity.save()
 
