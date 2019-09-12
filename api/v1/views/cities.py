@@ -16,11 +16,11 @@ def city(city_id=None, state_id=None):
     if city_id is None and state_objects is not None:
         cities = storage.all("City")
         my_cities = [value.to_dict() for key, value in cities.items()]
-        return jsonify(my_cities)
+        return (jsonify(my_cities), 200)
 
     my_cities = storage.get("City", city_id)
     if my_cities is not None:
-        return jsonify(my_cities.to_dict())
+        return jsonify(my_cities.to_dict(), 200)
     abort(404)
 
 
