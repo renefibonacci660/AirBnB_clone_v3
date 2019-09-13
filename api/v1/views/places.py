@@ -51,7 +51,7 @@ def delete_places(place_id):
 def post_places(city_id):
     """ Creates a Place """
     content = request.get_json()
-    if content is None:
+    if not content:
         return (jsonify({"error": "Not a JSON"}), 400)
     city_object = storage.get("City", city_id)
     if city_object is None:
@@ -75,7 +75,7 @@ def post_places(city_id):
 def update_places(place_id):
     """ Updates a Place obj & id """
     content = request.get_json()
-    if content is None:
+    if not content:
         return (jsonify({"error": "Not a JSON"}), 400)
 
     my_place = storage.get("Place", place_id)
