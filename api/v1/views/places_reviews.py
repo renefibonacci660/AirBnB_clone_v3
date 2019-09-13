@@ -10,7 +10,6 @@ from models.review import Review
                  methods=["GET"], strict_slashes=False)
 def list_places_by_review(place_id):
     """list places by review"""
-    print("lp!")
     place_object = storage.get("Place", place_id)
     if not place_object:
         abort(404)
