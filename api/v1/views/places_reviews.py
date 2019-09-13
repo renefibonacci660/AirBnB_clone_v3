@@ -82,7 +82,7 @@ def post_reviews(review_id=None):
 
 
 @app_views.route('/reviews/<review_id>', methods=["PUT"], strict_slashes=False)
-def update_cities(review_id):
+def update_reviews(review_id):
     """ Updates a Review obj & id """
     content = request.get_json()
     if content is None:
