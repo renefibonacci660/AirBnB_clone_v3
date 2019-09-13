@@ -65,6 +65,7 @@ def post_places(city_id):
 
     new_place = Place(**content)
     new_place.city_id = city_id
+    storage.new(new_place)
     new_place.save()
 
     return (jsonify(new_place.to_dict()), 201)
