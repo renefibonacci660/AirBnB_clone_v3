@@ -15,13 +15,13 @@ def place(place_id=None):
     if place_id is None:
         places = storage.all("Place")
         my_places = [value.to_dict() for key, value in places.items()]
-        return jsonify(my_places)
+        return (jsonify(my_places), 200)
 
     my_places = storage.get("Place", place_id)
     if my_places is None:
         abort(404)
     else:
-        return jsonify(my_places.to_dict())
+        return (jsonify(my_places.to_dict()), 200)
 
 
 @app_views.route('/api/v1/cities/<city_id>/places',
@@ -32,6 +32,7 @@ def place_by_city(city_id):
         abort(404)
     my_places_list = [my_places.to_dict() for my_places in city_object.places]
     return (jsonify(my_places_list), 200)
+
 
 @app_views.route('/places/<place_id>',
                  methods=["DELETE"], strict_slashes=False)
@@ -46,7 +47,8 @@ def delete_places(place_id):
     return (jsonify({}), 200)
 
 
-@app_views.route('/api/v1/cities/<city_id>/places', methods=["POST"], strict_slashes=False)
+@app_views.route('/api/v1/cities/<city_id>/places',
+                 methods=["POST"], strict_slashes=False)
 def post_places(city_id):
     """ Creates a Place """
     content = request.get_json()
