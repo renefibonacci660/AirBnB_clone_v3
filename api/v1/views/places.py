@@ -56,14 +56,13 @@ def post_places(city_id):
     if city_object is None:
         abort(404)
 
-    new_place = Place(**content)
-    ui = content.get("user_id")
-    if ui not in new_place:
-        abort(404)
-    if new_place.to_dict().get("user_id"):
+    if "user_id" not in content:
         return (jsonify({"error": "Missing user_id"}), 400)
-    if new_place.to_dict().get("name"):
+    if "name" not in content:
         return (jsonify({"error": "Missing name"}), 400)
+
+    new_place = Place(**content)
+    new_place.city_id = city_id
     new_place.save()
 
     return (jsonify(new_place.to_dict()), 201)
