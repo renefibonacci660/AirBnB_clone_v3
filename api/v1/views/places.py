@@ -27,7 +27,7 @@ def place(place_id=None):
                  methods=["GET"], strict_slashes=False)
 def place_by_city(city_id):
     city_object = storage.get("City", city_id)
-    if city_object is None:
+    if not city_object:
         abort(404)
     my_places_list = [my_places.to_dict() for my_places in city_object.places]
     return (jsonify(my_places_list), 200)
@@ -39,7 +39,7 @@ def delete_places(place_id):
     """ Deletes a Place obj based on its' id """
 
     my_place = storage.get("Place", place_id)
-    if not my_place:
+    if my_place is None:
         abort(404)
     storage.delete(my_place)
     storage.save()
